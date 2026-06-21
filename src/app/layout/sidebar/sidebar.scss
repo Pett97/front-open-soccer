@@ -1,0 +1,16 @@
+.layout {
+  display: flex;
+  height: 100vh;
+  background: var(--md-sys-color-primary-container-light);
+}
+
+.sidebar {
+  width: 250px;
+  background: var(--md-sys-color-primary-container-light);
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  background: var(--md-sys-color-primary-container-light);
+}
