@@ -1,1 +1,32 @@
-<p>mensalidade works!</p>
+<h2 class="center">Mensalidades Configuradas</h2>
+
+<a tabindex="0" class="btn elevated right m-5" (click)="toogleModal()">
+   <i class="material-icons right">add</i>Nova Mensalidade
+</a>
+
+<section>
+   <table class="highlight responsive-table">
+      <thead>
+         <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>Valor</th>
+            <th>Ações</th>
+         </tr>
+      </thead>
+      <tbody>
+         @for (mensalidade of mensalidades$ | async; track $index) {
+         <tr>
+            <td>{{ $index + 1 }}</td>
+            <td>{{ mensalidade.nome }}</td>
+            <td>R$ {{ mensalidade.valor }}</td>
+            <td>xxx</td>
+         </tr>
+         }
+      </tbody>
+   </table>
+</section>
+
+@if (showModal) {
+   <app-mensalidade-form (fecharModal)="toogleModal(); recarregarDados()"></app-mensalidade-form>
+}

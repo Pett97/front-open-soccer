@@ -1,0 +1,35 @@
+<div id="modal-mensalidade" class="modal-custom">
+   <div (click)="fechar()" class="modal-overlay"></div>
+
+   <div class="modal-content-custom">
+      <h4>Nova Mensalidade</h4>
+
+      <form [formGroup]="form" (ngSubmit)="salvar()" class="col s12">
+         <div class="row">
+
+            <div class="input-field col s12">
+               <input id="nome" type="text" formControlName="nome" class="validate">
+               <label for="nome" class="active">Nome do Plano</label>
+               @if (form.get('nome')?.touched && form.get('nome')?.invalid) {
+               <span class="red-text text-darken-2" style="font-size: 12px;">O nome é obrigatório.</span>
+               }
+            </div>
+
+            <div class="input-field col s12">
+               <input id="valor" type="number" step="0.01" formControlName="valor" class="validate">
+               <label for="valor" class="active">Valor</label>
+               @if (form.get('valor')?.touched && form.get('valor')?.invalid) {
+               <span class="red-text text-darken-2" style="font-size: 12px;">Informe um valor maior que zero.</span>
+               }
+            </div>
+         </div>
+
+         <div class="modal-footer-custom">
+            <a (click)="fechar()" class="waves-effect waves-red btn-flat">Cancelar</a>
+            <button class="waves-effect waves-green btn" type="submit" [disabled]="form.invalid">
+               Salvar
+            </button>
+         </div>
+      </form>
+   </div>
+</div>

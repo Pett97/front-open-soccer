@@ -6,5 +6,8 @@ export const routes: Routes = [
    { path: '', redirectTo: 'alunos', pathMatch: 'full' },
 
    { path: 'alunos', component: Alunos },
-   { path: 'mensalidades', component: Mensalidade },
+   {
+      path: "mensalidades",
+      loadChildren: () => import("./pages/mensalidade/mensalidade.routes").then(m => m.MENSALIDADE_ROUTES)
+   }
 ];
