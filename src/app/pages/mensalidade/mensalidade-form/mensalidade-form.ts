@@ -1,19 +1,29 @@
-import { Component, Output, EventEmitter, inject } from '@angular/core';
+import { Component, Output, EventEmitter, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators,ReactiveFormsModule} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MensalidadesApi } from '../mensalidade.api';
 
 @Component({
   selector: 'app-mensalidade-form',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './mensalidade-form.html',
   styleUrl: './mensalidade-form.scss',
 })
-export class MensalidadeForm {
+export class MensalidadeForm implements OnChanges {
   @Output() fecharModal = new EventEmitter<void>();
+  @Input() editarMensalidade?: any;
   private fb = inject(FormBuilder);
   private api = inject(MensalidadesApi);
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['editarMensalidade'] && this.editarMensalidade) {
+      this.form.patchValue({
+        nome: this.editarMensalidade.nome,
+        valor: this.editarMensalidade.valor
+      });
+    }
+  }
 
   fechar() {
     this.fecharModal.emit();
