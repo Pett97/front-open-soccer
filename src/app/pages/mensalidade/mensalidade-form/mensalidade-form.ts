@@ -1,19 +1,31 @@
-import { Component, Output, EventEmitter, inject } from '@angular/core';
+import { Component, Output, EventEmitter, inject, Input, OnChanges, SimpleChanges, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators,ReactiveFormsModule} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MensalidadesApi } from '../mensalidade.api';
+import { ToastService, ToastStatus } from '../../../shared/toast';
 
 @Component({
   selector: 'app-mensalidade-form',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './mensalidade-form.html',
   styleUrl: './mensalidade-form.scss',
 })
-export class MensalidadeForm {
+export class MensalidadeForm implements OnChanges {
+  private toast = inject(ToastService);
   @Output() fecharModal = new EventEmitter<void>();
+  @Input() editarMensalidade?: any;
   private fb = inject(FormBuilder);
   private api = inject(MensalidadesApi);
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['editarMensalidade'] && this.editarMensalidade) {
+      this.form.patchValue({
+        nome: this.editarMensalidade.nome,
+        valor: this.editarMensalidade.valor
+      });
+    }
+  }
 
   fechar() {
     this.fecharModal.emit();
@@ -28,10 +40,11 @@ export class MensalidadeForm {
     if (this.form.valid) {
       this.api.create(this.form.value).subscribe({
         next: () => {
+          this.toast.show("Mensalidade Salva com Sucesso", ToastStatus.SUCCESS)
           this.form.reset();
           this.fechar();
         },
-        error: (err) => console.error("erro ao criar nova mensalidade", err)
+        error: (err) => console.error("erro ao criar nova mensalidade", ToastStatus.ERROR)
       });
     }
   }

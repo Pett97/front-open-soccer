@@ -1,11 +1,14 @@
-<h2 class="center">Mensalidades Configuradas</h2>
+<section id="table-mensalidades">
 
-<a tabindex="0" class="btn elevated right m-5" (click)="toogleModal()">
-   <i class="material-icons right">add</i>Nova Mensalidade
-</a>
+   <header class="section-header">
+      <h2>Mensalidades Configuradas</h2>
 
-<section>
-   <table class="highlight responsive-table">
+      <button id="nova_mensalidade" class="button" (click)="toogleModal()">
+         Nova Mensalidade
+      </button>
+   </header>
+
+   <table>
       <thead>
          <tr>
             <th>#</th>
@@ -14,19 +17,30 @@
             <th>Ações</th>
          </tr>
       </thead>
+
       <tbody>
          @for (mensalidade of mensalidades$ | async; track $index) {
          <tr>
             <td>{{ $index + 1 }}</td>
             <td>{{ mensalidade.nome }}</td>
             <td>R$ {{ mensalidade.valor }}</td>
-            <td>xxx</td>
+
+            <td class="actions">
+               <button class="button button-outline" (click)="editar(mensalidade)">
+                  Editar
+               </button>
+
+               <button class="button button-clear danger" (click)="deletar(mensalidade.id)">
+                  Deletar
+               </button>
+            </td>
          </tr>
          }
       </tbody>
    </table>
 </section>
-
 @if (showModal) {
-   <app-mensalidade-form (fecharModal)="toogleModal(); recarregarDados()"></app-mensalidade-form>
+<app-mensalidade-form [editarMensalidade]="mensalidadeSelecionada" (fecharModal)="onFecharModal()">
+</app-mensalidade-form>
 }
+

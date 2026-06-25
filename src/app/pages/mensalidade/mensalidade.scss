@@ -1,0 +1,22 @@
+#table-mensalidades {
+   display: flex;
+   flex-direction: column;
+}
+
+
+.section-header {
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   margin-bottom: 1.5rem;
+}
+
+/* botão não precisa de nada especial */
+#nova_mensalidade {
+   margin: 15px;
+}
+
+table{
+   margin: 10px;
+   text-align: center;
+}

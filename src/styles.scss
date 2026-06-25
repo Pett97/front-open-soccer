@@ -1,2 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
-@import "./materialize/materialize.scss"
+// ========================
+// Milligram
+// ========================
+@import "../node_modules/milligram/src/milligram";
+
+:root {
+   --color-primary: #9b4dca;
+}

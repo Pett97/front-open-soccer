@@ -1,19 +1,12 @@
-<nav class="nav navbar">
-  <div class="nav-wrapper">
-    <a href="#" class="brand-logo m-1">Logo</a>
-
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a routerLink="/perfil">Perfil</a></li>
-      <li><a routerLink="/atualizacoes">Atualizações</a></li>
-      <li><a routerLink="/logout">Sair</a></li>
-    </ul>
-  </div>
-</nav>
+<section id="open_soccer">
+  <h2>Open Soccer</h2>
+</section>
 
 <div class="layout">
   <app-sidebar></app-sidebar>
 
   <main class="content">
+    <app-toast-component></app-toast-component>
     <router-outlet></router-outlet>
   </main>
 </div>
