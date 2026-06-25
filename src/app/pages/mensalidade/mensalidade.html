@@ -30,7 +30,7 @@
                   Editar
                </button>
 
-               <button class="button button-clear danger">
+               <button class="button button-clear danger" (click)="deletar(mensalidade.id)">
                   Deletar
                </button>
             </td>
@@ -38,10 +38,9 @@
          }
       </tbody>
    </table>
-
-   @if (showModal) {
-   <app-mensalidade-form [editarMensalidade]="mensalidadeSelecionada" (fecharModal)="onFecharModal()">
-   </app-mensalidade-form>
-   }
-
 </section>
+@if (showModal) {
+<app-mensalidade-form [editarMensalidade]="mensalidadeSelecionada" (fecharModal)="onFecharModal()">
+</app-mensalidade-form>
+}
+

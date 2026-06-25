@@ -4,6 +4,7 @@ import { MensalidadesApi } from './mensalidade.api';
 import { MensalidadeInterface } from '../../core/models/mensalidade';
 import { CommonModule } from '@angular/common';
 import { MensalidadeForm } from './mensalidade-form/mensalidade-form';
+import { ToastService, ToastStatus } from '../../shared/toast';
 
 @Component({
   selector: 'app-mensalidade',
@@ -14,6 +15,7 @@ import { MensalidadeForm } from './mensalidade-form/mensalidade-form';
 })
 export class Mensalidade {
   private api = inject(MensalidadesApi);
+  private toast = inject(ToastService);
   mensalidades$: Observable<MensalidadeInterface[]> = this.api.list();
   showModal: boolean = false;
   mensalidadeSelecionada: MensalidadeInterface | null = null;
@@ -22,6 +24,18 @@ export class Mensalidade {
   editar(mensalidade: MensalidadeInterface): void {
     this.mensalidadeSelecionada = mensalidade;
     this.showModal = true;
+  }
+
+  deletar(idMensalidade: number): void {
+    this.api.delete(idMensalidade).subscribe({
+      next: () => {
+        this.toast.show('Deletado com sucesso!',ToastStatus.SUCCESS);
+        this.recarregarDados();
+      },
+      error: () => {
+        this.toast.show('Erro ao deletar!', ToastStatus.ERROR);
+      }
+    });
   }
 
   onFecharModal(): void {
@@ -40,4 +54,5 @@ export class Mensalidade {
   recarregarDados() {
     this.mensalidades$ = this.api.list();
   }
+
 }
